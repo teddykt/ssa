@@ -16,20 +16,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ResourceApplication extends WebSecurityConfigurerAdapter  {
 	
-	//CORS SETTING
+
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.cors().and().authorizeRequests().anyRequest().authenticated();
+		http.httpBasic().disable();
+		http.authorizeRequests().anyRequest().authenticated();
 	}
 
-	// getting token
-	@Bean
-	HeaderHttpSessionIdResolver sessionStrategy() {
-		return new HeaderHttpSessionIdResolver("X-Auth-Token");
-	}
 	  
 	@RequestMapping("/")
-	@CrossOrigin(origins = "*", maxAge = 3600, allowedHeaders = { "x-auth-token", "x-requested-with", "x-xsrf-token" })
 	public Message home() {
 		return new Message("Hello World");
 	}
