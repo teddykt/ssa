@@ -4,11 +4,9 @@ import java.util.UUID;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.session.web.http.HeaderHttpSessionIdResolver;
-import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,11 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ResourceApplication extends WebSecurityConfigurerAdapter  {
 	
-
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.httpBasic().disable();
-		http.authorizeRequests().anyRequest().authenticated();
+		http.authorizeRequests().anyRequest().authenticated()
+		.and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED);
 	}
 
 	  
